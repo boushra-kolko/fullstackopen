@@ -1,0 +1,19 @@
+title Creating A Note In the SPA 
+
+note over Browser:
+User types the name of the new note in the text field and clicks save
+then the browser sends a post request containg the new note as json data to address new_note_spa
+end note
+
+Browser -> Server: https://fullstack-exampleapp.herokuapp.com/new_note_spa
+note over Server:
+Server returns HTTP status code 201 created 
+end note
+note over Browser:
+Browser executes js-code that was fetched earlier from Server
+end note
+
+note over Browser:
+browser executes the event handler
+that renders notes to display adding the new note to the notes list
+end note
