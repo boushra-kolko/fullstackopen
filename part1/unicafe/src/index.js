@@ -16,15 +16,22 @@ const StatisticsShow=(props)=>{
 
   }
 
+  const showStat=()=>{
+if(props.total===0) return <div>No feedback given!</div>
+else
+    return <div>
+    Good : {props.good}<br/>
+    Neutral : {props.neutral}<br/>
+    Bad :  {props.bad}<br/>
+     {showAvarage()}
+    All : {props.total}<br/>
+    {showPositive()}</div>
+  }
+
   return <div>
-  <h1>Statistics</h1>
+  
   <br/>
-  Good : {props.good}<br/>
-  Neutral : {props.neutral}<br/>
-  Bad :  {props.bad}<br/>
-   {showAvarage()}
-  All : {props.total}<br/>
-  {showPositive()}
+  {showStat()}
   </div>
 
 
@@ -76,6 +83,8 @@ const App = () => {
      <button onClick={badClick}>
        Bad
        </button>
+       <h1>Statistics</h1>
+       
       <StatisticsShow good={good} bad={bad} neutral={neutral} total={total} avarage={avarage} />
     </div>
   )
