@@ -1,6 +1,34 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
+const StatisticsShow=(props)=>{
+
+  const showAvarage =()=>{
+
+    if (props.avarage===0) return <div>Avarage :0</div>
+    else return <div>Avarage :{props.avarage/props.total}</div>
+  }
+
+  const showPositive=()=>{
+
+    if (props.total===0) return <div>Positive :0</div>
+    else return <div>Positive :{(props.good/props.total)*100} %</div>
+
+  }
+
+  return <div>
+  <h1>Statistics</h1>
+  <br/>
+  Good : {props.good}<br/>
+  Neutral : {props.neutral}<br/>
+  Bad :  {props.bad}<br/>
+   {showAvarage()}
+  All : {props.total}<br/>
+  {showPositive()}
+  </div>
+
+
+}
 const App = () => {
   // save clicks of each button to own state
   const [good, setGood] = useState(0)
@@ -32,18 +60,6 @@ const App = () => {
     return setBad(bad+1)
   }
 
-  const showAvarage =()=>{
-
-    if (avarage===0) return <div>Avarage :0</div>
-    else return <div>Avarage :{avarage/total}</div>
-  }
-
-  const showPositive=()=>{
-
-    if (total===0) return <div>Positive :0</div>
-    else return <div>Positive :{(good/total)*100} %</div>
-
-  }
 
   return (
     <div>
@@ -60,15 +76,7 @@ const App = () => {
      <button onClick={badClick}>
        Bad
        </button>
-       <h1>Statistics</h1>
-       <br/>
-       Good : {good}<br/>
-       Neutral : {neutral}<br/>
-       Bad :  {bad}<br/>
-        {showAvarage()}
-       All : {total}<br/>
-       {showPositive()}
-
+      <StatisticsShow good={good} bad={bad} neutral={neutral} total={total} avarage={avarage} />
     </div>
   )
 }
