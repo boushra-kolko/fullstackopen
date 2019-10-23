@@ -8,6 +8,20 @@ const App = (props) => {
     const [voted, setVoted] = useState([...voteArray])
     let rand = 0
 
+    const showMostVoted = () =>{
+        let mostArr=[...voted]
+        mostArr.sort()
+        let most=mostArr[voted.length-1]        
+        const findMost=(val)=>{return val===most}
+        let mostIndex=voted.findIndex(findMost)
+        if (mostIndex===-1) return <></>
+        return <div>
+        {anecdotes[mostIndex]}<br/>
+        has {most} votes.
+        </div> 
+       
+         
+    }
 
     const showRandom = () => {
         rand = Math.random()
@@ -28,10 +42,12 @@ const App = (props) => {
 
 
     return (
-        <div>
+        <div><h1>Anecdote of the day:</h1><br/>
             <div> {props.anecdotes[selected]} <br/>selected {voted[selected]} times
      </div>      <br /><button onClick={showRandom}>Next amecdots</button>
-            <br></br><button onClick={vote}>Vote</button>
+            <br></br><button onClick={vote}>Vote</button><br/>
+            <h1>Anecdote with most votes</h1><br/>
+        {showMostVoted()}
         </div>
     )
 }
