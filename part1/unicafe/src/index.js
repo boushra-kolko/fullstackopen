@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
 const Statistic = (props)=>{
-return (<div>{props.text+': '} {props.value} </div>)
+return (<tr><td>{props.text+': '}</td><td>{props.value}</td></tr>)
 
 }
 
@@ -10,34 +10,32 @@ const StatisticsShow = (props) => {
 
     const showAvarage = () => {
 
-        if (props.avarage === 0) return <div>Avarage :0</div>
-        else return <div>Avarage :{props.avarage / props.total}</div>
+        if (props.avarage === 0) return <tr><td>Avarage :</td><td>0</td></tr>
+        else return <tr><td>Avarage :</td><td>{props.avarage / props.total}</td></tr>
     }
 
     const showPositive = () => {
 
-        if (props.total === 0) return <div>Positive :0</div>
-        else return <div>Positive :{(props.good / props.total) * 100} %</div>
+        if (props.total === 0) return <tr><td>Positive :0</td></tr>
+        else return <tr><td>Positive :</td><td>{(props.good / props.total) * 100} %</td></tr>
 
     }
 
     const showStat = () => {
-        if (props.total === 0) return <div>No feedback given!</div>
+        if (props.total === 0) return <tr><td>No feedback given!</td></tr>
         else
-            return <div>
+            return <>
               <Statistic text='Good' value={props.good}/>
               <Statistic text='Neutral' value={props.neutral}/>
               <Statistic text='Bad' value={props.bad}/>
                 {showAvarage()}
-                All : {props.total}<br />
-                {showPositive()}</div>
+                <tr><td> All :</td><td>{props.total}</td></tr>
+                {showPositive()}</>
     }
 
-    return <div>
-
-        <br />
+    return <tbody>
         {showStat()}
-    </div>
+    </tbody>
 }
 
 const Button = (props) =>
@@ -90,12 +88,12 @@ const App = () => {
             <Button onClick={badClick} text='Bad'/>
 
             <h1>Statistics</h1>
-
+<table>
             <StatisticsShow good={good} bad={bad} neutral={neutral} total={total} avarage={avarage} />
-        </div>
+            </table>
+             </div>
     )
 }
 
 ReactDOM.render(<App />,
     document.getElementById('root')
-)

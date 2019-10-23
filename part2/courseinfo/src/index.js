@@ -19,22 +19,19 @@ const Part = (props) => {
 
 }
 
-const Content = (props) => {
-
-  return (
-    <div>
-      <Part part={props.parts[0].name} exercises={props.parts[0].exercises} />
-      <Part part={props.parts[1].name} exercises={props.parts[1].exercises} />
-      <Part part={props.parts[2].name} exercises={props.parts[2].exercises} />
-    </div>
+const Content = (props) => 
+    props.parts.map(content => 
+      <Part part={content.name} exercises={content.exercises} />  
+  
   )
-}
+
 
 const Total = (props) => {
 
+  const reducer =(total,current)=> total+current
   return (
     <div>
-      <p>Number of exercises {props.num['0'].exercises + props.num['1'].exercises + props.num['2'].exercises}</p>
+      <p>Number of exercises {props.num.map(parts=>parts.exercises).reduce(reducer)}</p>
     </div>
   )
 }
