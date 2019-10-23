@@ -1,72 +1,100 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState } from 'react'
+import ReactDOM from 'react-dom'
 
-
-const Header = (props) => {
-  return (
-    <div>
-      <h1>{props.courseName}</h1>
-    </div>
-  )
+const Statistic = (props)=>{
+return (<tr><td>{props.text+': '}</td><td>{props.value}</td></tr>)
 
 }
 
-const Part = (props) => {
-  return (<div>
+const StatisticsShow = (props) => {
 
-    <p>{props.part} {props.exercises}</p>
-  </div>)
+    const showAvarage = () => {
 
+        if (props.avarage === 0) return <tr><td>Avarage :</td><td>0</td></tr>
+        else return <tr><td>Avarage :</td><td>{props.avarage / props.total}</td></tr>
+    }
+
+    const showPositive = () => {
+
+        if (props.total === 0) return <tr><td>Positive :0</td></tr>
+        else return <tr><td>Positive :</td><td>{(props.good / props.total) * 100} %</td></tr>
+
+    }
+
+    const showStat = () => {
+        if (props.total === 0) return <tr><td>No feedback given!</td></tr>
+        else
+            return <>
+              <Statistic text='Good' value={props.good}/>
+              <Statistic text='Neutral' value={props.neutral}/>
+              <Statistic text='Bad' value={props.bad}/>
+                {showAvarage()}
+                <tr><td> All :</td><td>{props.total}</td></tr>
+                {showPositive()}</>
+    }
+
+    return <tbody>
+        {showStat()}
+    </tbody>
 }
 
-const Content = (props) => {
-
-  return (
-    <div>
-      <Part part={props.parts[0].name} exercises={props.parts[0].exercises} />
-      <Part part={props.parts[1].name} exercises={props.parts[1].exercises} />
-      <Part part={props.parts[2].name} exercises={props.parts[2].exercises} />
-    </div>
-  )
+const Button = (props) =>
+{
+return (<div>
+    <button onClick={props.onClick}>
+        {props.text}
+    </button>
+</div>)
 }
-
-const Total = (props) => {
-
-  return (
-    <div>
-      <p>Number of exercises {props.num['0'].exercises + props.num['1'].exercises + props.num['2'].exercises}</p>
-    </div>
-  )
-}
-
 
 const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
-  }
-  return (
-    <div>
-      <Header courseName={course.name} />
+    // save clicks of each button to own state
+    const [good, setGood] = useState(0)
+    const [neutral, setNeutral] = useState(0)
+    const [bad, setBad] = useState(0)
+    const [total, setTotal] = useState(0)
+    const [avarage, setAvarage] = useState(0)
 
-      <Content parts={course.parts} />
-      <Total num={course.parts} />
+    const goodClick = () => {
 
-    </div>
-  )
+        setTotal(total + 1)
+        setAvarage(avarage + 1)
+        return setGood(good + 1)
+    }
+
+
+    const neutrallClick = () => {
+
+        setTotal(total + 1)
+        setAvarage(avarage + 0)
+        return setNeutral(neutral + 1)
+    }
+
+
+    const badClick = () => {
+
+        setTotal(total + 1)
+        setAvarage(avarage - 1)
+        return setBad(bad + 1)
+    }
+
+
+    return (
+        <div>
+            <h1>Give feedback</h1>
+            <br />
+            <Button onClick={goodClick} text='Good'/>
+            <Button onClick={neutrallClick} text='Neutral'/>
+            <Button onClick={badClick} text='Bad'/>
+
+            <h1>Statistics</h1>
+<table>
+            <StatisticsShow good={good} bad={bad} neutral={neutral} total={total} avarage={avarage} />
+            </table>
+             </div>
+    )
 }
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<App />,
+    document.getElementById('root')
+)
