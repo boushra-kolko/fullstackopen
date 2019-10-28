@@ -5,11 +5,15 @@ import React, { useState } from 'react'
 const App = () => {
 
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '12345678' }
+    { name: 'Arto Hellas', number: '040-123456' },
+    { name: 'Ada Lovelace', number: '39-44-5323523' },
+    { name: 'Dan Abramov', number: '12-43-234345' },
+    { name: 'Mary Poppendieck', number: '39-23-6423122' }
   ])
 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [NewFilter, setNewFilter] = useState('')
 
   const stopSbumit = (event) => {
     event.preventDefault()
@@ -26,16 +30,38 @@ const App = () => {
   }
 
   const showNumbers = () => {
-    return <div>
-      {persons.map(person => <li key={person.name} > Name: {person.name}<br />Number: {person.number}</li>)}
-    </div>
+    if (NewFilter.length < 1) {
+      return <div>
+        {persons.map(person => <li key={person.name} > Name: {person.name}<br />Number: {person.number}</li>)}
+      </div>
+    }
+    else {
+
+      return <div>
+        {persons.map(person => {
+          if (person.name.toLowerCase().includes(NewFilter.toLowerCase()))
+            return <li key={person.name} > Name: {person.name}<br />Number: {person.number}</li>
+        })
+        }
+      </div>
+
+    }
   }
+
   const changeName = (event) => setNewName(event.target.value)
   const changeNumber = (event) => setNewNumber(event.target.value)
+  const changefilter = (event) => {
+    setNewFilter(event.target.value)
+    showNumbers()
+
+  }
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <div>
+        Filter showen with: <input value={NewFilter} onChange={changefilter} />
+      </div>
       <form onSubmit={stopSbumit}>
         <div>
           name: <input value={newName} onChange={changeName} />
@@ -50,7 +76,6 @@ const App = () => {
         {showNumbers()}
       </div>
     </div>
-  
   )
 }
 
