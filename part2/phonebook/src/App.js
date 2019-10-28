@@ -35,7 +35,7 @@ const App = () => {
         {persons.map(person => <li key={person.name} > Name: {person.name}<br />Number: {person.number}</li>)}
       </div>
     }
-    
+
     else {
       return <div>
         {persons.map(person => {
@@ -52,7 +52,6 @@ const App = () => {
   const changeNumber = (event) => setNewNumber(event.target.value)
   const changefilter = (event) => {
     setNewFilter(event.target.value)
-    showNumbers()
   }
 
   return (
