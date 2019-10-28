@@ -4,27 +4,32 @@ import React, { useState } from 'react'
 
 const App = () => {
 
-  const [ persons, setPersons] = useState([
+  const [persons, setPersons] = useState([
     { name: 'Arto Hellas' }
-  ]) 
-  
-  const [ newName, setNewName ] = useState('')
+  ])
 
-const stopSbumit=(event)=> {
-  event.preventDefault() 
-  let names=[...persons]
-  let newItem={name:newName}
-  setNewName('')
-  names.push(newItem)
-  setPersons(names)
-} 
+  const [newName, setNewName] = useState('')
 
-const showNumbers=()=>{
- return <div> 
-   {persons.map(person=><li key={person.name} > {person.name}</li>)}
-   </div> 
-}
-const changeName=(event)=> setNewName(event.target.value)
+
+  const stopSbumit = (event) => {
+    event.preventDefault()
+    let names = [...persons]
+    let newItem = { name: newName }
+
+    if (persons.map((person) => person.name).indexOf(newItem.name) > -1) { window.alert(`${newName} is already added to the phonebook!`) }
+    else {
+      setNewName('')
+      names.push(newItem)
+      setPersons(names)
+    }
+  }
+
+  const showNumbers = () => {
+    return <div>
+      {persons.map(person => <li key={person.name} > {person.name}</li>)}
+    </div>
+  }
+  const changeName = (event) => setNewName(event.target.value)
 
 
   return (
@@ -39,8 +44,8 @@ const changeName=(event)=> setNewName(event.target.value)
         </div>
       </form>
       <div>
-      <h2>Numbers</h2>
-      {showNumbers()}
+        <h2>Numbers</h2>
+        {showNumbers()}
       </div>
     </div>
   )
