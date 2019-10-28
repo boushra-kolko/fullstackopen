@@ -35,8 +35,8 @@ const App = () => {
         {persons.map(person => <li key={person.name} > Name: {person.name}<br />Number: {person.number}</li>)}
       </div>
     }
+    
     else {
-
       return <div>
         {persons.map(person => {
           if (person.name.toLowerCase().includes(NewFilter.toLowerCase()))
@@ -53,15 +53,15 @@ const App = () => {
   const changefilter = (event) => {
     setNewFilter(event.target.value)
     showNumbers()
-
   }
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
       <div>
-        Filter showen with: <input value={NewFilter} onChange={changefilter} />
-      </div>
+        <h3>Filter with: <input value={NewFilter} onChange={changefilter} />
+        </h3>
+      </div><br/>
       <form onSubmit={stopSbumit}>
         <div>
           name: <input value={newName} onChange={changeName} />
