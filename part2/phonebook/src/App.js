@@ -12,10 +12,11 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
+  const baseURL='http://localhost:3001/persons';
 
   useEffect(() => { 
     axios
-    .get('http://localhost:3001/persons')
+    .get(baseURL)
     .then(response => {
       setPersons(response.data)
     })
@@ -33,6 +34,7 @@ const App = () => {
       setNewNumber('')
       names.push(newItem)
       setPersons(names)
+      axios.post(baseURL,newItem)
     }
   }
 
