@@ -4,7 +4,7 @@ import React, { useState,useEffect } from 'react'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons';
-import axios from 'axios'
+import connect from './components/connect';
 
 const App = () => {
 
@@ -13,14 +13,9 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
   const baseURL='http://localhost:3001/persons';
-
-  useEffect(() => { 
-    axios
-    .get(baseURL)
-    .then(response => {
-      setPersons(response.data)
-    })
-    },[])
+useEffect(()=>{
+  connect.getData(baseURL).then(data => setPersons(data))},[])
+  
   const stopSbumit = (event) => {
     event.preventDefault()
     let names = [...persons]
@@ -34,7 +29,7 @@ const App = () => {
       setNewNumber('')
       names.push(newItem)
       setPersons(names)
-      axios.post(baseURL,newItem)
+      connect.update(baseURL,newItem)
     }
   }
 
